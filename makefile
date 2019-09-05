@@ -1,10 +1,13 @@
-all: lex.exe
+all: lexer.exe
 
-lex.exe: lex.o
-	 g++ -o lex.exe lex.o
+lexer.exe: lexer.o
+	 g++ -o lexer.exe lexer.o
 
-lex.o: lex.cpp
-	 g++ -c lex.cpp
+lexer.o: lexer.cpp
+	 g++ -c lexer.cpp
+
+run:
+	 ./lexer.exe
 
 clean:
-	 rm lex.o lex.exe
+	 rm lexer.o lexer.exe
