@@ -12,6 +12,9 @@ public:
     Token token;
     string input;
     int string_index = 0;
+
+    // -- REQUIRED -- : Label Tags
+    // -- REQUIRED -- : Data struct to store tokens (HashMap?, Array?, etc...)
 };
 
 
@@ -24,23 +27,15 @@ public:
     2. Check for basic Tokens (&, &&, |, ||, etc..)
     3. Check for digits
     4. Check for letters
-    5. Return token
+    5. Store any other symbol ( {, }, ;, (, ), etc...)
+    6. Return token
 */
 Token Lexer::getNextToken()
 {
     char peek = ' ';
     Token temp_token;
 
-    // for(auto it = input.begin(); it < input.end(); ++it, ++index)
-    // {
-    //     peek = *it;
-
-    //     if( peek == ' ' || peek == '\t' ) continue;
-    //     else if( peek == '\n') line_length = line_length + 1;
-    //     else break;
-    // }
-
-
+    // 1. Ignore Token if it is whitespace
     for(int i = string_index; i < input.length(); i++)
     {
         peek = input[string_index];
@@ -55,6 +50,7 @@ Token Lexer::getNextToken()
         else break;
     }
 
+    // 2. Check for basic tokens (&, &&, |, ||, etc...)
     switch(peek)
     {
         case '&':
@@ -119,7 +115,7 @@ Token Lexer::getNextToken()
             }
     }
 
-
+    // 3. Check for digits (iterate until full number is stored)
     if(isdigit(peek))
     {
         string_index++;
@@ -130,6 +126,8 @@ Token Lexer::getNextToken()
         } while(isdigit(peek));
         string_index--;
     }
+
+    // 4. Check for letters (iterate until full word is stored)
     else if(isalpha(peek))
     {
         string_index++;
@@ -140,11 +138,14 @@ Token Lexer::getNextToken()
         } while(isalpha(peek));
         string_index--;
     }
+
+    // 5. Store any other symbol ( {, }, ;, (, ), etc... )
     else
     {
         string_index++;
         temp_token.value = peek;
     }
 
+    // 6. Return token value that was found
     return temp_token;
 }
