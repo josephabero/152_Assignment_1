@@ -47,28 +47,103 @@ Token Lexer::getNextToken()
 
         cout << endl << peek << " " << string_index << endl;
 
-        if( peek == ' ' || peek == '\t' )
+        if( peek == ' ' || peek == '\t' || peek == '\n')
         {
             string_index++;
             continue;
         }
-        else if( peek == '\n') string_index++;
         else break;
     }
 
-    if(isalpha(peek))
+    switch(peek)
     {
-        string_index++;
-        temp_token.value += peek;
+        case '&':
+            if( input[string_index + 1] == '&' )
+            {
+                string_index++;
+                temp_token.value = "&&";
+            }
+            else
+            {
+                temp_token.value = "&";
+            }
+        case '|':
+            if( input[string_index + 1] == '|' )
+            {
+                string_index++;
+                temp_token.value = "||";
+            }
+            else
+            {
+                temp_token.value = '|';
+            }
+        case '=':
+            if( input[string_index + 1] == '=' )
+            {
+                string_index++;
+                temp_token.value = "==";
+            }
+            else
+            {
+                temp_token.value = '=';
+            }
+        case '!':
+            if( input[string_index + 1] == '=' )
+            {
+                string_index++;
+                temp_token.value = "!=";
+            }
+            else
+            {
+                temp_token.value = '!';
+            }
+        case '<':
+            if( input[string_index + 1] == '=' )
+            {
+                string_index++;
+                temp_token.value = "<=";
+            }
+            else
+            {
+                temp_token.value = '<';
+            }
+        case '>':
+            if( input[string_index + 1] == '=' )
+            {
+                string_index++;
+                temp_token.value = ">=";
+            }
+            else
+            {
+                temp_token.value = '>';
+            }
     }
-    else if(isdigit(peek))
+
+
+    if(isdigit(peek))
     {
         string_index++;
-        temp_token.value += peek;
+        do
+        {
+            temp_token.value += peek;
+            peek = input[string_index++];
+        } while(isdigit(peek));
+        string_index--;
+    }
+    else if(isalpha(peek))
+    {
+        string_index++;
+        do
+        {
+            temp_token.value += peek;
+            peek = input[string_index++];
+        } while(isalpha(peek));
+        string_index--;
     }
     else
     {
         string_index++;
+        temp_token.value = peek;
     }
 
     return temp_token;
