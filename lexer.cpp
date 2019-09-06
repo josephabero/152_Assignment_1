@@ -66,6 +66,10 @@ Token Lexer::getNextToken()
         string_index++;
         temp_token.value += peek;
     }
+    else
+    {
+        string_index++;
+    }
 
     return temp_token;
 }
