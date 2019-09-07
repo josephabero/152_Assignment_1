@@ -1,0 +1,12 @@
+If you use command line
+To compile in command line, enter the src directory and run
+
+> make
+> make run
+> make clean
+
+make: 			builds main.cpp
+make run: 		runs project (observe console output)
+make clean: 	removes main.exe, must run make again to run project
+
+-I- If changes are made to class files (lexer.cpp, token.cpp, etc), make clean, then make
