@@ -40,7 +40,7 @@ Token Lexer::getNextToken()
     {
         peek = input[string_index];
 
-        cout << endl << peek << " " << string_index << endl;
+        // cout << endl << peek << " " << string_index << endl;
 
         if( peek == ' ' || peek == '\t' || peek == '\n')
         {
@@ -58,60 +58,72 @@ Token Lexer::getNextToken()
             {
                 string_index++;
                 temp_token.value = "&&";
+                temp_token.tokenTag = "AND";
             }
             else
             {
                 temp_token.value = "&";
+                temp_token.tokenTag = "&";
             }
         case '|':
             if( input[string_index + 1] == '|' )
             {
                 string_index++;
                 temp_token.value = "||";
+                temp_token.tokenTag = "OR";
             }
             else
             {
                 temp_token.value = '|';
+                temp_token.tokenTag = "|";
             }
         case '=':
             if( input[string_index + 1] == '=' )
             {
                 string_index++;
                 temp_token.value = "==";
+                temp_token.tokenTag = "EQ";
             }
             else
             {
                 temp_token.value = '=';
+                temp_token.tokenTag = "=";
             }
         case '!':
             if( input[string_index + 1] == '=' )
             {
                 string_index++;
                 temp_token.value = "!=";
+                temp_token.tokenTag = "NE";
             }
             else
             {
                 temp_token.value = '!';
+                temp_token.tokenTag = "!";
             }
         case '<':
             if( input[string_index + 1] == '=' )
             {
                 string_index++;
                 temp_token.value = "<=";
+                temp_token.tokenTag = "LE";
             }
             else
             {
                 temp_token.value = '<';
+                temp_token.tokenTag = "<";
             }
         case '>':
             if( input[string_index + 1] == '=' )
             {
                 string_index++;
                 temp_token.value = ">=";
+                temp_token.tokenTag = "GE";
             }
             else
             {
                 temp_token.value = '>';
+                temp_token.tokenTag = ">";
             }
     }
 
@@ -124,6 +136,18 @@ Token Lexer::getNextToken()
             temp_token.value += peek;
             peek = input[string_index++];
         } while(isdigit(peek));
+        temp_token.tokenTag = "NUM";
+
+        if(peek == '.')
+        {
+            do
+            {
+                temp_token.value += peek;
+                peek = input[string_index++];
+            } while(isdigit(peek));
+            temp_token.tokenTag = "REAL";
+        }
+
         string_index--;
     }
 
@@ -136,6 +160,30 @@ Token Lexer::getNextToken()
             temp_token.value += peek;
             peek = input[string_index++];
         } while(isalpha(peek));
+        temp_token.tokenTag = "ID";
+
+        // switch(temp_token.value)
+        // {
+        //     case "int": temp_token.tokenTag = "BASE_TYPE";
+        //     case "float": temp_token.tokenTag = "BASE_TYPE";
+        //     case "bool": temp_token.tokenTag = "BASE_TYPE";
+        //     case "break": temp_token.tokenTag = "BREAK";
+        //     case "do": temp_token.tokenTag = "DO";
+        //     case "else": temp_token.tokenTag = "ELSE";
+        //     case "false": temp_token.tokenTag = "FALSE";
+        //     case "true": temp_token.tokenTag = "TRUE";
+        //     case "while": temp_token.tokenTag = "WHILE";
+        // }
+        if(temp_token.value == "int") temp_token.tokenTag = "BASE_TYPE";
+        else if(temp_token.value == "float") temp_token.tokenTag = "BASE_TYPE";
+        else if(temp_token.value == "bool") temp_token.tokenTag = "BASE_TYPE";
+        else if(temp_token.value == "break") temp_token.tokenTag = "BREAK";
+        else if(temp_token.value == "do") temp_token.tokenTag = "DO";
+        else if(temp_token.value == "else") temp_token.tokenTag = "ELSE";
+        else if(temp_token.value == "false") temp_token.tokenTag = "FALSE";
+        else if(temp_token.value == "true") temp_token.tokenTag = "TRUE";
+        else if(temp_token.value == "while") temp_token.tokenTag = "WHILE";
+        
         string_index--;
     }
 
@@ -144,6 +192,7 @@ Token Lexer::getNextToken()
     {
         string_index++;
         temp_token.value = peek;
+        temp_token.tokenTag = peek;
     }
 
     // 6. Return token value that was found

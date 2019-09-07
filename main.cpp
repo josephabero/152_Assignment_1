@@ -9,10 +9,10 @@ int main ()
     	"{ \
     		int b; b = 1; \
     		{ \
-    			int a; a = 2; do a = a+1; while(a < 100); \
+    			int a; a = 2.42; do a = a+1; while(a < 100); \
     		} \
     	}";
-    cout << lexer.input << " length: " << lexer.input.length() << endl;
+    // cout << lexer.input << " length: " << lexer.input.length() << endl;
 
 
     // -- REQUIRED -- : Find data struct for tokens & implement in Lexer class
@@ -30,6 +30,6 @@ int main ()
     // -- REQUIRED -- : Print final token TYPE
     for(int i = 0; i < lexer.input.length(); i++)
     {
-    	cout << "VALUE: " << token_peek[i].value << endl;
+    	cout << token_peek[i].tokenTag << " " << token_peek[i].value << endl;
     }
 }
