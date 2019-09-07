@@ -9,7 +9,7 @@ int main ()
     	"{ \
     		int b; b = 1; \
     		{ \
-    			int a; a = 2.42; do a = a+1; while(a < 100); \
+    			int a; a = 2; do a = a+1; while(a < 100); \
     		} \
     	}";
     // cout << lexer.input << " length: " << lexer.input.length() << endl;
