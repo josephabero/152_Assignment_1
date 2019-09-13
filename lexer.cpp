@@ -40,7 +40,7 @@ Token Lexer::getNextToken()
     {
         peek = input[string_index];
 
-        // cout << endl << peek << " " << string_index << endl;
+        //  << endl << peek << " " << string_index << endl;
 
         if( peek == ' ' || peek == '\t' || peek == '\n')
         {
@@ -50,150 +50,174 @@ Token Lexer::getNextToken()
         else break;
     }
 
+    // cout << string_index << ": " << temp_token.tokenTag << endl; 
+
     // 2. Check for basic tokens (&, &&, |, ||, etc...)
     switch(peek)
     {
         case '&':
             if( input[string_index + 1] == '&' )
             {
-                string_index++;
+                string_index += 2;
                 temp_token.value = "&&";
                 temp_token.tokenTag = "AND";
             }
             else
             {
+                string_index++;
                 temp_token.value = "&";
                 temp_token.tokenTag = "&";
             }
+            break;
         case '|':
             if( input[string_index + 1] == '|' )
             {
-                string_index++;
+                string_index += 2;
                 temp_token.value = "||";
                 temp_token.tokenTag = "OR";
             }
             else
             {
+                string_index++;
                 temp_token.value = '|';
                 temp_token.tokenTag = "|";
             }
+            break;
         case '=':
             if( input[string_index + 1] == '=' )
             {
-                string_index++;
+                string_index += 2;
                 temp_token.value = "==";
                 temp_token.tokenTag = "EQ";
             }
             else
             {
+                string_index++;
                 temp_token.value = '=';
                 temp_token.tokenTag = "=";
             }
+            break;
         case '!':
             if( input[string_index + 1] == '=' )
             {
-                string_index++;
+                string_index += 2;
                 temp_token.value = "!=";
                 temp_token.tokenTag = "NE";
             }
             else
             {
+                string_index++;
                 temp_token.value = '!';
                 temp_token.tokenTag = "!";
             }
+            break;
         case '<':
             if( input[string_index + 1] == '=' )
             {
-                string_index++;
+                string_index += 2;
                 temp_token.value = "<=";
                 temp_token.tokenTag = "LE";
             }
             else
             {
+                string_index++;
                 temp_token.value = '<';
                 temp_token.tokenTag = "<";
             }
+            break;
         case '>':
             if( input[string_index + 1] == '=' )
             {
-                string_index++;
+                string_index += 2;
                 temp_token.value = ">=";
                 temp_token.tokenTag = "GE";
             }
             else
             {
+                string_index++;
                 temp_token.value = '>';
                 temp_token.tokenTag = ">";
             }
-    }
-
-    // 3. Check for digits (iterate until full number is stored)
-    if(isdigit(peek))
-    {
-        string_index++;
-        do
-        {
-            temp_token.value += peek;
-            peek = input[string_index++];
-        } while(isdigit(peek));
-        temp_token.tokenTag = "NUM";
-
-        if(peek == '.')
-        {
-            do
+            break;
+        case '#':
+            if( input[string_index + 1] == '#' )
             {
-                temp_token.value += peek;
-                peek = input[string_index++];
-            } while(isdigit(peek));
-            temp_token.tokenTag = "REAL";
-        }
-
-        string_index--;
-    }
-
-    // 4. Check for letters (iterate until full word is stored)
-    else if(isalpha(peek))
-    {
-        string_index++;
-        do
-        {
-            temp_token.value += peek;
-            peek = input[string_index++];
-        } while(isalpha(peek));
-        temp_token.tokenTag = "ID";
-
-        // switch(temp_token.value)
-        // {
-        //     case "int": temp_token.tokenTag = "BASE_TYPE";
-        //     case "float": temp_token.tokenTag = "BASE_TYPE";
-        //     case "bool": temp_token.tokenTag = "BASE_TYPE";
-        //     case "break": temp_token.tokenTag = "BREAK";
-        //     case "do": temp_token.tokenTag = "DO";
-        //     case "else": temp_token.tokenTag = "ELSE";
-        //     case "false": temp_token.tokenTag = "FALSE";
-        //     case "true": temp_token.tokenTag = "TRUE";
-        //     case "while": temp_token.tokenTag = "WHILE";
-        // }
-        if(temp_token.value == "int") temp_token.tokenTag = "BASE_TYPE";
-        else if(temp_token.value == "float") temp_token.tokenTag = "BASE_TYPE";
-        else if(temp_token.value == "bool") temp_token.tokenTag = "BASE_TYPE";
-        else if(temp_token.value == "break") temp_token.tokenTag = "BREAK";
-        else if(temp_token.value == "do") temp_token.tokenTag = "DO";
-        else if(temp_token.value == "else") temp_token.tokenTag = "ELSE";
-        else if(temp_token.value == "false") temp_token.tokenTag = "FALSE";
-        else if(temp_token.value == "true") temp_token.tokenTag = "TRUE";
-        else if(temp_token.value == "while") temp_token.tokenTag = "WHILE";
+                string_index += 2;
+                temp_token.value = "##";
+                temp_token.tokenTag = "EOF";
+            }
+            break;
+        default:
+            // 3. Check for digits (iterate until full number is stored)
+            if(isdigit(peek))
+            {
+                string_index++;
+                do
+                {
+                    temp_token.value += peek;
+                    peek = input[string_index++];
+                } while(isdigit(peek));
+                temp_token.tokenTag = "NUM";
         
-        string_index--;
+                if(peek == '.')
+                {
+                    do
+                    {
+                        temp_token.value += peek;
+                        peek = input[string_index++];
+                    } while(isdigit(peek));
+                    temp_token.tokenTag = "REAL";
+                }
+        
+                string_index--;
+            }
+        
+            // 4. Check for letters (iterate until full word is stored)
+            else if(isalpha(peek))
+            {
+                string_index++;
+                do
+                {
+                    temp_token.value += peek;
+                    peek = input[string_index++];
+                } while(isalpha(peek));
+                temp_token.tokenTag = "ID";
+        
+                // switch(temp_token.value)
+                // {
+                //     case "int": temp_token.tokenTag = "BASE_TYPE";
+                //     case "float": temp_token.tokenTag = "BASE_TYPE";
+                //     case "bool": temp_token.tokenTag = "BASE_TYPE";
+                //     case "break": temp_token.tokenTag = "BREAK";
+                //     case "do": temp_token.tokenTag = "DO";
+                //     case "else": temp_token.tokenTag = "ELSE";
+                //     case "false": temp_token.tokenTag = "FALSE";
+                //     case "true": temp_token.tokenTag = "TRUE";
+                //     case "while": temp_token.tokenTag = "WHILE";
+                // }
+                if(temp_token.value == "int")           temp_token.tokenTag = "BASE_TYPE";
+                else if(temp_token.value == "float")    temp_token.tokenTag = "BASE_TYPE";
+                else if(temp_token.value == "bool")     temp_token.tokenTag = "BASE_TYPE";
+                else if(temp_token.value == "break")    temp_token.tokenTag = "BREAK";
+                else if(temp_token.value == "do")       temp_token.tokenTag = "DO";
+                else if(temp_token.value == "else")     temp_token.tokenTag = "ELSE";
+                else if(temp_token.value == "false")    temp_token.tokenTag = "FALSE";
+                else if(temp_token.value == "true")     temp_token.tokenTag = "TRUE";
+                else if(temp_token.value == "while")    temp_token.tokenTag = "WHILE";
+                else if(temp_token.value == "if")       temp_token.tokenTag = "IF";
+                
+                string_index--;
+            }
+        
+            // 5. Store any other symbol ( {, }, ;, (, ), etc... )
+            else
+            {
+                string_index++;
+                temp_token.value = peek;
+                temp_token.tokenTag = peek;
+            }
     }
 
-    // 5. Store any other symbol ( {, }, ;, (, ), etc... )
-    else
-    {
-        string_index++;
-        temp_token.value = peek;
-        temp_token.tokenTag = peek;
-    }
 
     // 6. Return token value that was found
     return temp_token;
