@@ -1,13 +1,13 @@
-all: lexer.exe
+all: main.exe
 
-lexer.exe: lexer.o
-	 g++ -o lexer.exe lexer.o
+main.exe: main.o
+	 g++ -o main.exe main.o
 
-lexer.o: lexer.cpp
-	 g++ -c lexer.cpp
+main.o: main.cpp
+	 g++ -c main.cpp
 
 run:
-	 ./lexer.exe
+	 ./main.exe
 
 clean:
-	 rm lexer.o lexer.exe
+	 rm main.o main.exe
