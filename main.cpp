@@ -13,24 +13,25 @@ int main ()
     			if(a == 100) \
     		} \
     	}##";
-    // cout << lexer.input << " length: " << lexer.input.length() << endl;
-
 
     // -- REQUIRED -- : Find data struct for tokens & implement in Lexer class
     Token token_peek[lexer.input.length()];
  
- 	// Iterate through each token to determine the TYPE and VALUE of token
+ 	// -I- Iterate through each token to determine the TYPE and VALUE of token
     int index = 0;
     for(auto it = lexer.input.begin(); it < lexer.input.end(); it++, index++)
     {
     	token_peek[index] = lexer.getNextToken();
     }
     
-    // Print final token VALUES 
-    // -- REQUIRED -- : Print final token TYPE
+    // -I- Print final token VALUES and TYPE
+    cout << "-- FINAL OUTPUT --" << endl << "----------" << endl
+    	<< "TAG | VAL" << endl << "----------" << endl;
     for(int i = 0; i < lexer.input.length(); i++)
     {
     	cout << token_peek[i].tokenTag << " " << token_peek[i].value << endl;
-    	if(token_peek[i].tokenTag == "EOF") break;
+
+    	// -I- Finish printing if EOF token is found
+    	if(token_peek[i].tokenTag == "EOF") break; 
     }
 }

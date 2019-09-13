@@ -32,27 +32,18 @@ public:
 */
 Token Lexer::getNextToken()
 {
-    char peek = ' ';
+    // -I- Initialize variables
+    char peek = input[string_index];
     Token temp_token;
 
-    // 1. Ignore Token if it is whitespace
-    for(int i = string_index; i < input.length(); i++)
+    // 1. Ignore Token if it is whitespace (iterates input until no whitespace is found)
+    while(peek == ' ' || peek == '\t' || peek == '\n')
     {
-        peek = input[string_index];
-
-        //  << endl << peek << " " << string_index << endl;
-
-        if( peek == ' ' || peek == '\t' || peek == '\n')
-        {
-            string_index++;
-            continue;
-        }
-        else break;
+        peek = input[++string_index];
     }
 
-    // cout << string_index << ": " << temp_token.tokenTag << endl; 
-
-    // 2. Check for basic tokens (&, &&, |, ||, etc...)
+    // 2. Check if character is a basic token (&, &&, |, ||, etc...)
+    // If not a basic character, default to 3, 4, 5
     switch(peek)
     {
         case '&':
@@ -148,17 +139,22 @@ Token Lexer::getNextToken()
             }
             break;
         default:
-            // 3. Check for digits (iterate until full number is stored)
+            // 3. Check for digits
             if(isdigit(peek))
             {
                 string_index++;
+
+                // -I- Iterate until full number is stored
                 do
                 {
                     temp_token.value += peek;
                     peek = input[string_index++];
                 } while(isdigit(peek));
+
+                // -I- Assume it is a generic number, then check if it's REAL
                 temp_token.tokenTag = "NUM";
         
+                // -I- Check if number is REAL
                 if(peek == '.')
                 {
                     do
@@ -172,29 +168,22 @@ Token Lexer::getNextToken()
                 string_index--;
             }
         
-            // 4. Check for letters (iterate until full word is stored)
+            // 4. Check for letters
             else if(isalpha(peek))
             {
                 string_index++;
+
+                // -I- Iterate until full word is stored
                 do
                 {
                     temp_token.value += peek;
                     peek = input[string_index++];
                 } while(isalpha(peek));
+
+                // -I- Assume it is an ID, then check if it's a keyword
                 temp_token.tokenTag = "ID";
-        
-                // switch(temp_token.value)
-                // {
-                //     case "int": temp_token.tokenTag = "BASE_TYPE";
-                //     case "float": temp_token.tokenTag = "BASE_TYPE";
-                //     case "bool": temp_token.tokenTag = "BASE_TYPE";
-                //     case "break": temp_token.tokenTag = "BREAK";
-                //     case "do": temp_token.tokenTag = "DO";
-                //     case "else": temp_token.tokenTag = "ELSE";
-                //     case "false": temp_token.tokenTag = "FALSE";
-                //     case "true": temp_token.tokenTag = "TRUE";
-                //     case "while": temp_token.tokenTag = "WHILE";
-                // }
+
+                // -I- Check if word is a keyword
                 if(temp_token.value == "int")           temp_token.tokenTag = "BASE_TYPE";
                 else if(temp_token.value == "float")    temp_token.tokenTag = "BASE_TYPE";
                 else if(temp_token.value == "bool")     temp_token.tokenTag = "BASE_TYPE";
