@@ -130,14 +130,6 @@ Token Lexer::getNextToken()
                 temp_token.tokenTag = ">";
             }
             break;
-        case '#':
-            if( input[string_index + 1] == '#' )
-            {
-                string_index += 2;
-                temp_token.value = "##";
-                temp_token.tokenTag = "EOF";
-            }
-            break;
         default:
             // 3. Check for digits
             if(isdigit(peek))
@@ -196,6 +188,14 @@ Token Lexer::getNextToken()
                 else if(temp_token.value == "if")       temp_token.tokenTag = "IF";
                 
                 string_index--;
+            }
+
+            else if(peek == std::cin.eof())
+            {
+                // cout << string_index << " EOF" << endl;
+                string_index++;
+                temp_token.value = "null";
+                temp_token.tokenTag = "EOF";
             }
         
             // 5. Store any other symbol ( {, }, ;, (, ), etc... )
