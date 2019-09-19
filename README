@@ -1,5 +1,13 @@
-If you use command line
-To compile in command line, enter the src directory and run
+152 Assignment 1: Lexical Analyzer
+
+By: Joseph Abero, Jon Andrew Hernandez, Gong Huang, and Colin Shardt
+
+Code is written in C++ and project can be built and run in the IDE of your choice. 
+These are steps to run in command line.
+
+TO RUN
+--------
+To compile in command line, enter the src directory and run commands:
 
 > make
 > make run
@@ -9,4 +17,23 @@ make: 			builds main.cpp
 make run: 		runs project (observe console output)
 make clean: 	removes main.exe, must run make again to run project
 
--I- If changes are made to class files (lexer.cpp, token.cpp, etc), make clean, then make
+-I- If changes are made to class files (lexer.cpp, token.cpp, etc), 'make clean', then 'make'
+
+
+TO ADJUST INPUT
+----------------
+Adjust string field of lexer.input found in main.cpp to desired program to test. 
+
+Make sure '\' character is placed at the end of a line if string input uses multiple lines.
+
+EXAMPLE) 
+
+    lexer.input = 
+    	// TEST INPUT 1
+    	"{ \
+            int b; b = 1; \
+            { \
+                int a; a = 2; \
+                do a = a+1; while(a < 100); \
+            } \
+        }";
