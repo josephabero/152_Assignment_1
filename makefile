@@ -1,10 +1,13 @@
-all: main.exe
+all: main
 
-main.exe: main.o
-	 g++ -o main.exe main.o
+main: main.o lexer/lexer.o
+	 g++ -std=c++11 -o main.exe main.o lexer/lexer.o
 
 main.o: main.cpp
-	 g++ -c -std=c++11 main.cpp
+	 g++ -std=c++11 -c main.cpp main.o
+
+lexer.o:
+	 g++ -std=c++11-c lexer/lexer.o lexer.o
 
 run:
 	 ./main.exe

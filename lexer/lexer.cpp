@@ -1,22 +1,10 @@
 #include <iostream>
-#include "token.cpp"
+#include "token.hpp"
+#include "lexer.hpp"
 using namespace std;
 
-class Lexer {
-public:
-    Lexer() { 
-        input = "";
-    };
-    Token getNextToken();
 
-    Token token;
-    string input;
-    int string_index = 0;
-
-    // -- REQUIRED -- : Label Tags
-    // -- REQUIRED -- : Data struct to store tokens (HashMap?, Array?, etc...)
-};
-
+int Lexer::line = 0;
 
 /*
     Iterates through Lexer string value and tries to find end of token value.
@@ -33,13 +21,14 @@ public:
 Token Lexer::getNextToken()
 {
     // -I- Initialize variables
-    char peek = input[string_index];
+    char peek = input[current_lexer_index];
     Token temp_token;
 
     // 1. Ignore Token if it is whitespace (iterates input until no whitespace is found)
     while(peek == ' ' || peek == '\t' || peek == '\n')
     {
-        peek = input[++string_index];
+        if(peek == '\n') Lexer::line += 1;
+        peek = input[++current_lexer_index];
     }
 
     // 2. Check if character is a basic token (&, &&, |, ||, etc...)
@@ -47,85 +36,85 @@ Token Lexer::getNextToken()
     switch(peek)
     {
         case '&':
-            if( input[string_index + 1] == '&' )
+            if( input[current_lexer_index + 1] == '&' )
             {
-                string_index += 2;
+                current_lexer_index += 2;
                 temp_token.value = "&&";
                 temp_token.tokenTag = "AND";
             }
             else
             {
-                string_index++;
+                current_lexer_index++;
                 temp_token.value = "&";
                 temp_token.tokenTag = "&";
             }
             break;
         case '|':
-            if( input[string_index + 1] == '|' )
+            if( input[current_lexer_index + 1] == '|' )
             {
-                string_index += 2;
+                current_lexer_index += 2;
                 temp_token.value = "||";
                 temp_token.tokenTag = "OR";
             }
             else
             {
-                string_index++;
+                current_lexer_index++;
                 temp_token.value = '|';
                 temp_token.tokenTag = "|";
             }
             break;
         case '=':
-            if( input[string_index + 1] == '=' )
+            if( input[current_lexer_index + 1] == '=' )
             {
-                string_index += 2;
+                current_lexer_index += 2;
                 temp_token.value = "==";
                 temp_token.tokenTag = "EQ";
             }
             else
             {
-                string_index++;
+                current_lexer_index++;
                 temp_token.value = '=';
                 temp_token.tokenTag = "=";
             }
             break;
         case '!':
-            if( input[string_index + 1] == '=' )
+            if( input[current_lexer_index + 1] == '=' )
             {
-                string_index += 2;
+                current_lexer_index += 2;
                 temp_token.value = "!=";
                 temp_token.tokenTag = "NE";
             }
             else
             {
-                string_index++;
+                current_lexer_index++;
                 temp_token.value = '!';
                 temp_token.tokenTag = "!";
             }
             break;
         case '<':
-            if( input[string_index + 1] == '=' )
+            if( input[current_lexer_index + 1] == '=' )
             {
-                string_index += 2;
+                current_lexer_index += 2;
                 temp_token.value = "<=";
                 temp_token.tokenTag = "LE";
             }
             else
             {
-                string_index++;
+                current_lexer_index++;
                 temp_token.value = '<';
                 temp_token.tokenTag = "<";
             }
             break;
         case '>':
-            if( input[string_index + 1] == '=' )
+            if( input[current_lexer_index + 1] == '=' )
             {
-                string_index += 2;
+                current_lexer_index += 2;
                 temp_token.value = ">=";
                 temp_token.tokenTag = "GE";
             }
             else
             {
-                string_index++;
+                current_lexer_index++;
                 temp_token.value = '>';
                 temp_token.tokenTag = ">";
             }
@@ -134,13 +123,13 @@ Token Lexer::getNextToken()
             // 3. Check for digits
             if(isdigit(peek))
             {
-                string_index++;
+                current_lexer_index++;
 
                 // -I- Iterate until full number is stored
                 do
                 {
                     temp_token.value += peek;
-                    peek = input[string_index++];
+                    peek = input[current_lexer_index++];
                 } while(isdigit(peek));
 
                 // -I- Assume it is a generic number, then check if it's REAL
@@ -152,24 +141,24 @@ Token Lexer::getNextToken()
                     do
                     {
                         temp_token.value += peek;
-                        peek = input[string_index++];
+                        peek = input[current_lexer_index++];
                     } while(isdigit(peek));
                     temp_token.tokenTag = "REAL";
                 }
         
-                string_index--;
+                current_lexer_index--;
             }
         
             // 4. Check for letters
             else if(isalpha(peek))
             {
-                string_index++;
+                current_lexer_index++;
 
                 // -I- Iterate until full word is stored
                 do
                 {
                     temp_token.value += peek;
-                    peek = input[string_index++];
+                    peek = input[current_lexer_index++];
                 } while(isalpha(peek));
 
                 // -I- Assume it is an ID, then check if it's a keyword
@@ -187,13 +176,13 @@ Token Lexer::getNextToken()
                 else if(temp_token.value == "while")    temp_token.tokenTag = "WHILE";
                 else if(temp_token.value == "if")       temp_token.tokenTag = "IF";
                 
-                string_index--;
+                current_lexer_index--;
             }
 
             else if(peek == std::cin.eof())
             {
-                // cout << string_index << " EOF" << endl;
-                string_index++;
+                // cout << current_lexer_index << " EOF" << endl;
+                current_lexer_index++;
                 temp_token.value = "null";
                 temp_token.tokenTag = "EOF";
             }
@@ -201,7 +190,7 @@ Token Lexer::getNextToken()
             // 5. Store any other symbol ( {, }, ;, (, ), etc... )
             else
             {
-                string_index++;
+                current_lexer_index++;
                 temp_token.value = peek;
                 temp_token.tokenTag = peek;
             }
