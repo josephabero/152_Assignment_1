@@ -1,6 +1,7 @@
 #pragma once
 
-#include "lexer/lexer.cpp"
+#include "../lexer/lexer.hpp"
+#include <vector>
 
 class Node
 {
@@ -9,10 +10,10 @@ public:
 	vector<Node> children;
 	Node() 
 	{
-		lexline = Lexer.line;
+		lexline = Lexer::line;
 	}
 
 	vector<Node> getChildren() { return children; }
 
 	std::string getNodeStr() { return ""; }
-}
+};

@@ -4,16 +4,16 @@
 #include "token.hpp"
 
 class Lexer {
-	static int line;
 public:
     Token token;
     string input;
     int current_lexer_index = 0;
+    static int line;
 
     Lexer() { 
         input = "";
     };
-    
+
     Token getNextToken();
 
     // -- REQUIRED -- : Label Tags
