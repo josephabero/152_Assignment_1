@@ -77,7 +77,6 @@ Stmt Parser::stmts()
 
 Stmt Parser::stmt()
 {
-	cout << "stmt" << endl;
 	// Stmt result;
 	// return result;
 
@@ -90,4 +89,11 @@ Stmt Parser::stmt()
 		cout << "if worked: " << look.tokenTag << endl;
 	}
 	return s;
+}
+
+Stmt assign()
+{
+	Stmt stmt;
+	Token t = look;
+	match("ID");
 }

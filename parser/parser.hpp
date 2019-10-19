@@ -26,6 +26,8 @@ public:
 	Stmt stmt();
 	Stmt stmts();
 
+	Stmt assign();
+
 private:
 	Lexer lexer;
 	Token look;
