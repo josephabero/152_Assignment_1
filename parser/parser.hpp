@@ -32,6 +32,9 @@ public:
 	Expr andexpr();
 	Expr equality();
 	Expr rel();
+	Expr expression();
+	Expr term();
+	Expr factor();
 
 private:
 	Lexer lexer;
