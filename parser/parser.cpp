@@ -4,6 +4,7 @@ using namespace std;
 void Parser::move()
 { 
  	look = lexer.getNextToken(); 
+ 	cout << "Move: " << look.value << " " << look.tokenTag << endl;
 }
 
 void Parser::error(string errorMessage)
@@ -19,13 +20,16 @@ void Parser::match(string t)
 
 Prog Parser::program()
 {
+	cout << "Program" << endl;
 	Block s = block();
+
 	Prog tempProg(s);
 	return tempProg;
 }
 
 Block Parser::block()
 {
+	cout << "Block" << endl;
 	match("{");
 	//Env
 	decls();
@@ -38,6 +42,7 @@ Block Parser::block()
 
 void Parser::decls()
 {
+	cout << "decls" << endl;
 	while(look.tokenTag == "BASE_TYPE")
 	{
 		// Type = type();
@@ -50,12 +55,14 @@ void Parser::decls()
 
 void Parser::type()
 {
+	cout << "Type" << endl;
 	match("BASE_TYPE");
 	// return Type
 }
 
 Stmt Parser::stmts()
 {
+	cout << "stmts" << endl;
 	if(look.tokenTag == "}") 
 	{
 		Stmt null;
@@ -63,13 +70,14 @@ Stmt Parser::stmts()
 	}
 	else
 	{
-		Seq resultSeq(stmt(), stmts());
+		Seq resultSeq(stmt(), stmt());
 		return resultSeq;
 	}
 }
 
 Stmt Parser::stmt()
 {
+	cout << "stmt" << endl;
 	Stmt result;
 	return result;
 }

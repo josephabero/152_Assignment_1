@@ -6,19 +6,24 @@
 
 using namespace std;
 
+string printTree(Node root);
+void printTree(Node root, int indent, string sb);
+string getIndentString(int indent);
+
 int main ()
 {
-  //   Lexer lexer;
+    cout << "Start" << endl;
+    Lexer lexer;
 
-  //   lexer.input = 
-  //   	// TEST INPUT 1
-  //   	"{ \
-  //           int b; b = 1; \
-  //           { \
-  //               int a; a = 2; \
-  //               do a = a+1; while(a < 100); \
-  //           } \
-  //       }";
+    lexer.input = 
+    	// TEST INPUT 1
+    	"{ \
+            int b; b = 1; \
+            { \
+                int a; a = 2; \
+                do a = a+1; while(a < 100); \
+            } \
+        }";
 
   //   	// TEST INPUT 2
   //   	//    "{ \
@@ -66,6 +71,40 @@ int main ()
   //   	if(token_peek[i].tokenTag == "EOF") break; 
   //   }
 
-    Lexer lexer;
     Parser parser(lexer);
+    Prog tree = parser.program();
+    cout << "Syntax tree:" << endl;
+    //string treeStr = printTree(tree);
+    //cout << treeStr << endl;
+}
+
+string printTree(Node root)
+{
+    int indent = 0;
+    string result;
+    printTree(root, indent, result);
+    return result;
+}
+
+void printTree(Node root, int indent, string sb)
+{
+    sb += getIndentString(indent);
+    sb += "+--";
+    sb += root.getNodeStr();
+    sb += "\n";
+
+    for(int i = 0; i < root.children.size(); i++)
+    {
+        printTree(root.children[i], indent + 1, sb);
+    }
+}
+
+string getIndentString(int indent)
+{
+    string result;
+    for(int i = 0; i < indent; i++)
+    {
+        result += "|  ";
+    }
+    return result;
 }
