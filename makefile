@@ -16,4 +16,4 @@ run:
 	 ./main.exe
 
 clean:
-	 rm main.o lexer.o main.exe
+	 rm main.o lexer.o parser.o main.exe

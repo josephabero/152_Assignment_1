@@ -33,7 +33,7 @@ Block Parser::block()
 	match("}");
 	// Env
 	Block tempBlock(s);
-	return Block;
+	return tempBlock;
 }
 
 void Parser::decls()
@@ -56,5 +56,20 @@ void Parser::type()
 
 Stmt Parser::stmts()
 {
-	
+	if(look.tokenTag == "}") 
+	{
+		Stmt null;
+		return null;	// returning null/empty statement
+	}
+	else
+	{
+		Seq resultSeq(stmt(), stmts());
+		return resultSeq;
+	}
+}
+
+Stmt Parser::stmt()
+{
+	Stmt result;
+	return result;
 }

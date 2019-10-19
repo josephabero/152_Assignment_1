@@ -3,6 +3,7 @@
 #include "../lexer/lexer.hpp"
 #include "../lexer/token.hpp"
 #include "../inter/Prog.hpp"
+#include "../inter/Seq.hpp"
 
 class Parser
 {
@@ -21,6 +22,8 @@ public:
 	Block block();
 	void decls();
 	void type();
+	Stmt stmt();
+	Stmt stmts();
 
 private:
 	Lexer lexer;
