@@ -5,6 +5,7 @@
 #include "../inter/Prog.hpp"
 #include "../inter/Seq.hpp"
 #include "../inter/Expr.hpp"
+#include "../symbols/Env.hpp"
 
 class Parser
 {
@@ -27,8 +28,13 @@ public:
 	Stmt stmts();
 
 	Stmt assign();
+	Expr allexpr();
+	Expr andexpr();
+	Expr equality();
+	Expr rel();
 
 private:
 	Lexer lexer;
 	Token look;
+	Env top;
 };

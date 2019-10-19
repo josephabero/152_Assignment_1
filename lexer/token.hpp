@@ -31,7 +31,13 @@ class Token {
             tokenTag = "";
         };
 
+        bool operator <(const Token& rhs) const
+        {
+        	return value < rhs.value;
+        }
+
         Token(std::string value, std::string tokenTag) : value(value), tokenTag(tokenTag) {}
+
 
         std::string value;
         std::string tokenTag;
