@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-using namespace std;
 
 // enum TokenTag {
 //  AND,
@@ -31,6 +30,9 @@ class Token {
             value   = ""; 
             tokenTag = "";
         };
-        string value;
-        string tokenTag;
+
+        Token(std::string value, std::string tokenTag) : value(value), tokenTag(tokenTag) {}
+
+        std::string value;
+        std::string tokenTag;
 };

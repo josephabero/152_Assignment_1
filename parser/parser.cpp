@@ -9,7 +9,7 @@ void Parser::move()
 
 void Parser::error(string errorMessage)
 {
-	cout << "near line " << Lexer::line << ": " << errorMessage;
+	cout << "near line " << Lexer::line << ": " << errorMessage << endl;
 }
 
 void Parser::match(string t)
@@ -78,6 +78,16 @@ Stmt Parser::stmts()
 Stmt Parser::stmt()
 {
 	cout << "stmt" << endl;
-	Stmt result;
-	return result;
+	// Stmt result;
+	// return result;
+
+	Expr expr;
+	Stmt s, s1, s2;
+
+	cout << "stmt: " << look.tokenTag << endl;
+	if(look.tokenTag == ";")
+	{
+		cout << "if worked: " << look.tokenTag << endl;
+	}
+	return s;
 }

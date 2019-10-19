@@ -4,6 +4,7 @@
 #include "../lexer/token.hpp"
 #include "../inter/Prog.hpp"
 #include "../inter/Seq.hpp"
+#include "../inter/Expr.hpp"
 
 class Parser
 {

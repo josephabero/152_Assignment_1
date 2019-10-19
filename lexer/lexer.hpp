@@ -6,7 +6,7 @@
 class Lexer {
 public:
     Token token;
-    string input;
+    std::string input;
     int current_lexer_index = 0;
     static int line;
 

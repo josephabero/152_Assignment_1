@@ -7,13 +7,13 @@ class Node
 {
 public:
 	int lexline = 0;
-	vector<Node> children;
+	std::vector<Node> children;
 	Node() 
 	{
 		lexline = Lexer::line;
 	}
 
-	vector<Node> getChildren() { return children; }
+	std::vector<Node> getChildren() { return children; }
 
 	std::string getNodeStr() { return ""; }
 };
