@@ -10,9 +10,9 @@ class Env
 public:
 	Env() {}
 
-	void put(Token w, Id i)
+	void put(Token w, Id *i)
 	{
-		table.insert(std::pair<Token, Id>(w, i));
+		table.insert(std::pair<Token, Id>(w, *i));
 	}
 
 	Id get(Token w)

@@ -6,7 +6,7 @@
 class Prog : public Node
 {
 public:
-	Prog(Block block) : block(block)
+	Prog(Block *block) : block(block)
 	{
 		std::cout << "push_back from Program\n";
 		children.push_back(block);
@@ -15,5 +15,5 @@ public:
 	std::string getNodeStr() { return "PROGRAM"; };
 
 	
-	Block block;
+	Block *block;
 };

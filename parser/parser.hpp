@@ -22,20 +22,20 @@ public:
 	void match(std::string t);
 	
 	Prog* program();
-	Block block();
+	Block* block();
 	void decls();
-	Type type();
-	Stmt stmt();
-	Stmt stmts();
+	Type* type();
+	Stmt* stmt();
+	Stmt* stmts();
 
-	Stmt assign();
-	Expr allexpr();
-	Expr andexpr();
-	Expr equality();
-	Expr rel();
-	Expr expression();
-	Expr term();
-	Expr factor();
+	Stmt* assign();
+	Expr* allexpr();
+	Expr* andexpr();
+	Expr* equality();
+	Expr* rel();
+	Expr* expression();
+	Expr* term();
+	Expr* factor();
 
 private:
 	Lexer lexer;

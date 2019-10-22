@@ -7,7 +7,7 @@
 using namespace std;
 
 string printTree(Node *root);
-void printTree(Node root, int indent, string *sb);
+void printTree(Node *root, int indent, string *sb);
 string getIndentString(int indent);
 
 int main ()
@@ -79,31 +79,36 @@ int main ()
     cout << "Syntax tree:" << endl;
     string treeStr = printTree(tree);
     cout << treeStr << endl;
+
+    // for(int i = 0; i < tree->children.size(); i++)
+    // {
+    //   cout << tree->children[i]->getNodeStr() << endl;
+    // }
 }
 
 string printTree(Node *root)
 {
-    // cout << "root" << endl;
+    cout << "ROOT" << endl;
     cout << "root: " << root->getNodeStr() << endl;
     int indent = 0;
     string result;
-    printTree(*root, indent, &result);
-    // cout << "root: " << result << endl;
+    printTree(root, indent, &result);
+    cout << "root: " << result << endl;
     return result;
 }
 
-void printTree(Node root, int indent, string *sb)
+void printTree(Node *root, int indent, string *sb)
 {
     // cout << "printTree: " << indent << endl;
     *sb += getIndentString(indent);
     *sb += "+--";
-    *sb += root.getNodeStr();
+    *sb += root->getNodeStr();
     *sb += "\n";
-    // cout << *sb << endl;
+    cout << *sb << endl;
 
-    for(int i = 0; i < root.children.size(); i++)
+    for(int i = 0; i < root->children.size(); i++)
     {
-        printTree(root.children[i], indent + 1, sb);
+        printTree(root->children[i], indent + 1, sb);
     }
 }
 

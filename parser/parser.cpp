@@ -21,24 +21,24 @@ void Parser::match(string t)
 Prog* Parser::program()
 {
     cout << "Program" << endl;
-    Block s = block();
+    Block *s = block();
 
     Prog *tempProg = new Prog(s);
     cout << "End Program" << endl;
     return tempProg;
 }
 
-Block Parser::block()
+Block* Parser::block()
 {
     cout << "Block" << endl;
     match("{");
     Env savedEnv = top;
     decls();
-    Stmt s = stmts();
+    Stmt *s = stmts();
     match("}");
     top = savedEnv;
 
-    Block tempBlock(s);
+    Block *tempBlock = new Block(s);
     cout << "End Block" << endl;
     return tempBlock;
 }
@@ -48,51 +48,51 @@ void Parser::decls()
     cout << "decls" << endl;
     while(look.tokenTag == "BASE_TYPE")
     {
-        Type t = type();
+        Type *t = type();
         Token tok = look;
         match("ID");
         match(";");
-        Id id(tok, t, used);
+        Id *id = new Id(tok, *t, used);
         top.put(tok, id);
-        used = used + t.width;
+        used = used + t->width;
     }
     cout << "End decls" << endl;
 }
 
-Type Parser::type()
+Type* Parser::type()
 {
     cout << "Type" << endl;
 
-    Type p(look.value, look.tokenTag, 0);
+    Type *p = new Type(look.value, look.tokenTag, 0);
     match("BASE_TYPE");
     return p;
     cout << "End type" << endl;
 }
 
-Stmt Parser::stmts()
+Stmt* Parser::stmts()
 {
     // Stmt result;
     // return result;
     // cout << "stmts" << endl;
     if(look.tokenTag == "}") 
     {
-        Stmt null;
+        Stmt *null = new Stmt();
         return null;    // returning null/empty statement
     }
     else
     {
-        Seq resultSeq(stmt(), stmts());
+        Seq *resultSeq = new Seq(stmt(), stmts());
         return resultSeq;
     }
 }
 
-Stmt Parser::stmt()
+Stmt* Parser::stmt()
 {
     // Stmt result;
     // return result;
 
-    Expr expr;
-    Stmt s, s1, s2;
+    Expr *expr;
+    Stmt *s, *s1, *s2;
 
     cout << "stmt: " << look.tokenTag << endl;
     if(look.tokenTag == ";")
@@ -100,7 +100,7 @@ Stmt Parser::stmt()
         cout << "if worked: " << look.tokenTag << endl;
         move();
 
-        Stmt nullStmt;
+        Stmt *nullStmt = new Stmt();
         return nullStmt;
     }
     else if(look.tokenTag == "if")
@@ -129,10 +129,10 @@ Stmt Parser::stmt()
     return s;
 }
 
-Stmt Parser::assign()
+Stmt* Parser::assign()
 {
     cout << "assign" << endl;
-    Stmt stmt;
+    Stmt *stmt;
     Token token = look;
     match("ID");
     Id id = top.get(token);
@@ -143,10 +143,10 @@ Stmt Parser::assign()
     return stmt;
 }
 
-Expr Parser::allexpr()
+Expr* Parser::allexpr()
 {
     cout << "allexpr" << endl;
-    Expr expr = andexpr();
+    Expr *expr = andexpr();
     while(look.tokenTag == "OR")
     {
         Token token = look;
@@ -156,10 +156,10 @@ Expr Parser::allexpr()
     return expr;
 }
 
-Expr Parser::andexpr()
+Expr* Parser::andexpr()
 {
     cout << "andexpr" << endl;
-    Expr expr = equality();
+    Expr *expr = equality();
     while(look.tokenTag == "AND")
     {
         Token token = look;
@@ -169,9 +169,9 @@ Expr Parser::andexpr()
     return expr;
 }
 
-Expr Parser::equality()
+Expr* Parser::equality()
 {
-    Expr expr = rel();
+    Expr *expr = rel();
     while(look.tokenTag == "EQ" || look.tokenTag == "NE")
     {
         Token token = look;
@@ -181,9 +181,9 @@ Expr Parser::equality()
     return expr;
 }
 
-Expr Parser::rel()
+Expr* Parser::rel()
 {
-    Expr expr = expression();
+    Expr *expr = expression();
 
     if(look.tokenTag == "<" ||
         look.tokenTag == "LE" ||
@@ -197,9 +197,9 @@ Expr Parser::rel()
     return expr;
 }
 
-Expr Parser::expression()
+Expr* Parser::expression()
 {
-    Expr expr = term();
+    Expr *expr = term();
     while(look.tokenTag == "+" || look.tokenTag == "-")
     {
         Token token = look;
@@ -209,9 +209,9 @@ Expr Parser::expression()
     return expression();
 }
 
-Expr Parser::term()
+Expr* Parser::term()
 {
-    Expr expr = factor();
+    Expr *expr = factor();
     while(look.tokenTag == "*" || look.tokenTag == "/")
     {
         Token token = look;
@@ -221,9 +221,9 @@ Expr Parser::term()
     return expr;
 }
 
-Expr Parser::factor()
+Expr* Parser::factor()
 {
-    Expr expr; // Expr initialized as null
+    Expr *expr = new Expr(); // Expr initialized as null
     if(look.tokenTag == "(")
     {
         move();
@@ -260,6 +260,6 @@ Expr Parser::factor()
         string s = look.tokenTag;
         Id id = top.get(look);
         move();
-        return id;
+        return &id;
     }
 }
