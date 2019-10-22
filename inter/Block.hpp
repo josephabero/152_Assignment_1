@@ -9,6 +9,7 @@ public:
 
 	Block(Stmt stmt) : stmt(stmt)
 	{
+		std::cout << "push_back from Block\n";
 		children.push_back(stmt);
 	}
 

@@ -11,6 +11,7 @@ public:
 	{
 		type = check(expr1.type, expr2.type); // uses Expr's type member var
 		if(type == NULL) error("Type Error");
+		cout << "push_back from Logical" << endl;
 		children.push_back(expr1);
 		children.push_back(expr2);
 	}

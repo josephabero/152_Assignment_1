@@ -12,6 +12,7 @@ class Parser
 public:
 	Parser(Lexer lexer) : lexer(lexer) 
 	{
+		used = 0;
 		move();
 	}
 
@@ -20,10 +21,10 @@ public:
 	void move();
 	void match(std::string t);
 	
-	Prog program();
+	Prog* program();
 	Block block();
 	void decls();
-	void type();
+	Type type();
 	Stmt stmt();
 	Stmt stmts();
 
@@ -40,4 +41,5 @@ private:
 	Lexer lexer;
 	Token look;
 	Env top;
+	int used;
 };

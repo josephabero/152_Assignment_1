@@ -15,5 +15,5 @@ public:
 
 	std::vector<Node> getChildren() { return children; }
 
-	std::string getNodeStr() { return ""; }
+	virtual std::string getNodeStr();
 };

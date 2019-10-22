@@ -6,8 +6,8 @@
 
 using namespace std;
 
-string printTree(Node root);
-void printTree(Node root, int indent, string sb);
+string printTree(Node *root);
+void printTree(Node root, int indent, string *sb);
 string getIndentString(int indent);
 
 int main ()
@@ -16,14 +16,16 @@ int main ()
     Lexer lexer;
 
     lexer.input = 
+        // TEST INPUT 0
+        "{ int b; }";
     	// TEST INPUT 1
-    	"{ \
-            int b; b = 1; \
-            { \
-                int a; a = 2; \
-                do a = a+1; while(a < 100); \
-            } \
-        }";
+    	// "{ \
+     //        int b; b = 1; \
+     //        { \
+     //            int a; a = 2; \
+     //            do a = a+1; while(a < 100); \
+     //        } \
+     //    }";
 
   //   	// TEST INPUT 2
   //   	//    "{ \
@@ -72,26 +74,32 @@ int main ()
   //   }
 
     Parser parser(lexer);
-    Prog tree = parser.program();
+    Prog *tree = parser.program();
+    cout << tree->getNodeStr() << endl;
     cout << "Syntax tree:" << endl;
-    //string treeStr = printTree(tree);
-    //cout << treeStr << endl;
+    string treeStr = printTree(tree);
+    cout << treeStr << endl;
 }
 
-string printTree(Node root)
+string printTree(Node *root)
 {
+    // cout << "root" << endl;
+    cout << "root: " << root->getNodeStr() << endl;
     int indent = 0;
     string result;
-    printTree(root, indent, result);
+    printTree(*root, indent, &result);
+    // cout << "root: " << result << endl;
     return result;
 }
 
-void printTree(Node root, int indent, string sb)
+void printTree(Node root, int indent, string *sb)
 {
-    sb += getIndentString(indent);
-    sb += "+--";
-    sb += root.getNodeStr();
-    sb += "\n";
+    // cout << "printTree: " << indent << endl;
+    *sb += getIndentString(indent);
+    *sb += "+--";
+    *sb += root.getNodeStr();
+    *sb += "\n";
+    // cout << *sb << endl;
 
     for(int i = 0; i < root.children.size(); i++)
     {

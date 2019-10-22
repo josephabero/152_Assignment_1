@@ -18,12 +18,13 @@ void Parser::match(string t)
     else                    error("Syntax error");      
 }
 
-Prog Parser::program()
+Prog* Parser::program()
 {
     cout << "Program" << endl;
     Block s = block();
 
-    Prog tempProg(s);
+    Prog *tempProg = new Prog(s);
+    cout << "End Program" << endl;
     return tempProg;
 }
 
@@ -31,12 +32,14 @@ Block Parser::block()
 {
     cout << "Block" << endl;
     match("{");
-    //Env
+    Env savedEnv = top;
     decls();
     Stmt s = stmts();
     match("}");
-    // Env
+    top = savedEnv;
+
     Block tempBlock(s);
+    cout << "End Block" << endl;
     return tempBlock;
 }
 
@@ -45,24 +48,32 @@ void Parser::decls()
     cout << "decls" << endl;
     while(look.tokenTag == "BASE_TYPE")
     {
-        // Type = type();
-        type();
+        Type t = type();
         Token tok = look;
         match("ID");
         match(";");
+        Id id(tok, t, used);
+        top.put(tok, id);
+        used = used + t.width;
     }
+    cout << "End decls" << endl;
 }
 
-void Parser::type()
+Type Parser::type()
 {
     cout << "Type" << endl;
+
+    Type p(look.value, look.tokenTag, 0);
     match("BASE_TYPE");
-    // return Type
+    return p;
+    cout << "End type" << endl;
 }
 
 Stmt Parser::stmts()
 {
-    cout << "stmts" << endl;
+    // Stmt result;
+    // return result;
+    // cout << "stmts" << endl;
     if(look.tokenTag == "}") 
     {
         Stmt null;
@@ -70,7 +81,7 @@ Stmt Parser::stmts()
     }
     else
     {
-        Seq resultSeq(stmt(), stmt());
+        Seq resultSeq(stmt(), stmts());
         return resultSeq;
     }
 }
@@ -120,6 +131,7 @@ Stmt Parser::stmt()
 
 Stmt Parser::assign()
 {
+    cout << "assign" << endl;
     Stmt stmt;
     Token token = look;
     match("ID");
@@ -133,6 +145,7 @@ Stmt Parser::assign()
 
 Expr Parser::allexpr()
 {
+    cout << "allexpr" << endl;
     Expr expr = andexpr();
     while(look.tokenTag == "OR")
     {
@@ -145,6 +158,7 @@ Expr Parser::allexpr()
 
 Expr Parser::andexpr()
 {
+    cout << "andexpr" << endl;
     Expr expr = equality();
     while(look.tokenTag == "AND")
     {

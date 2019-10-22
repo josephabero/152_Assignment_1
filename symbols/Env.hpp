@@ -17,7 +17,7 @@ public:
 
 	Id get(Token w)
 	{
-		Id found; 
+		Id found;
 
 		std::map<Token, Id>::iterator itr;
 		for(itr = table.begin(); itr != table.end(); ++itr)

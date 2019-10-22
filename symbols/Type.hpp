@@ -5,31 +5,58 @@
 class Type : public Token
 {
 public:
+	Type() {}
+	
     Type(std::string s, std::string tag, int w) : type(s, tag), width(w)
     {}
 
-    Token Int()
+    Type Int()
     {
-        Token comp;
+        Type comp;
         comp.value = "int";
         comp.tokenTag = "BASE_TYPE";
         return comp;
     };
 
-    Token Float()
+    Type Float()
     {
-        Token comp;
+        Type comp;
         comp.value = "float";
         comp.tokenTag = "BASE_TYPE";
         return comp;
     };
 
-    Token Bool()
+    Type Bool()
     {
-        Token comp;
+        Type comp;
         comp.value = "bool";
         comp.tokenTag = "BASE_TYPE";
         return comp;
+    };
+
+    Type Null()
+    {
+    	Type comp;
+    	comp.value = "";
+    	comp.tokenTag = "";
+    	return comp;
+    };
+
+    bool numeric(Type p)
+    {
+    	return (p == Type::Int() || p == Type::Float());
+    };
+
+    Type max(Type p1, Type p2)
+    {
+    	if( ! numeric(p1) || ! numeric(p2) ) 					return Null();
+    	else if ( p1 == Type::Float() || p2 == Type::Float()) 	return Float();
+    	else if( p1 == Type::Int() || p2 == Type::Int()) 		return Int();
+    };
+
+    bool operator ==(const Type& rhs)
+    {
+    	return((type.value == rhs.value) && (type.tokenTag == rhs.tokenTag));
     };
 
     Token type;
