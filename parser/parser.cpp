@@ -1,4 +1,5 @@
 #include "parser.hpp"
+#include <assert.h>
 using namespace std;
 
 void Parser::move()
@@ -14,8 +15,10 @@ void Parser::error(string errorMessage)
 
 void Parser::match(string t)
 {
-    if(look.tokenTag == t)  move();
-    else                    error("Syntax error");      
+    // if(look.tokenTag == t)  move();
+    // else                    error("Syntax error");
+    assert(look.tokenTag == t);     
+    move(); 
 }
 
 Prog* Parser::program()
@@ -117,12 +120,13 @@ Stmt* Parser::stmt()
         // return Else(expr, s1, s2);
     }
 
-    else if("{")
+    else if(look.tokenTag == "{")
     {
         return block();
     }
     else
     {
+        cout << "stmt: assign()" << endl;
         return assign();
     }
 
@@ -135,10 +139,10 @@ Stmt* Parser::assign()
     Stmt *stmt;
     Token token = look;
     match("ID");
-    Id id = top.get(token);
+    Id *id = top.get(token);
 
     move();
-    // stmt = Set(id, allexpr());
+    stmt = new Set(*(id), *(allexpr()));
     match(";");
     return stmt;
 }
@@ -171,6 +175,7 @@ Expr* Parser::andexpr()
 
 Expr* Parser::equality()
 {
+    cout << "equality" << endl;
     Expr *expr = rel();
     while(look.tokenTag == "EQ" || look.tokenTag == "NE")
     {
@@ -183,6 +188,7 @@ Expr* Parser::equality()
 
 Expr* Parser::rel()
 {
+    cout << "rel" << endl;
     Expr *expr = expression();
 
     if(look.tokenTag == "<" ||
@@ -199,6 +205,7 @@ Expr* Parser::rel()
 
 Expr* Parser::expression()
 {
+    cout << "expression" << endl;
     Expr *expr = term();
     while(look.tokenTag == "+" || look.tokenTag == "-")
     {
@@ -206,11 +213,12 @@ Expr* Parser::expression()
         move();
         // expr = Arith(token, expr, term());
     }
-    return expression();
+    return expr;
 }
 
 Expr* Parser::term()
 {
+    cout << "term" << endl;
     Expr *expr = factor();
     while(look.tokenTag == "*" || look.tokenTag == "/")
     {
@@ -223,6 +231,7 @@ Expr* Parser::term()
 
 Expr* Parser::factor()
 {
+    cout << "factor" << endl;
     Expr *expr = new Expr(); // Expr initialized as null
     if(look.tokenTag == "(")
     {
@@ -257,9 +266,11 @@ Expr* Parser::factor()
     }
     else if(look.tokenTag == "ID")
     {
+        cout << "ID" << endl;
         string s = look.tokenTag;
-        Id id = top.get(look);
+        Id *id = top.get(look);
         move();
-        return &id;
+        return id;
     }
+    return expr;
 }

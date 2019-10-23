@@ -17,7 +17,7 @@ int main ()
 
     lexer.input = 
         // TEST INPUT 0
-        "{ int b; }";
+        "{ int b;\n int dd;\n b = dd;}";
     	// TEST INPUT 1
     	// "{ \
      //        int b; b = 1; \
@@ -88,12 +88,12 @@ int main ()
 
 string printTree(Node *root)
 {
-    cout << "ROOT" << endl;
-    cout << "root: " << root->getNodeStr() << endl;
+    // cout << "ROOT" << endl;
+    // cout << "root: " << root->getNodeStr() << endl;
     int indent = 0;
     string result;
     printTree(root, indent, &result);
-    cout << "root: " << result << endl;
+    // cout << "root: " << result << endl;
     return result;
 }
 
@@ -104,7 +104,7 @@ void printTree(Node *root, int indent, string *sb)
     *sb += "+--";
     *sb += root->getNodeStr();
     *sb += "\n";
-    cout << *sb << endl;
+    // cout << *sb << endl;
 
     for(int i = 0; i < root->children.size(); i++)
     {

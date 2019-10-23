@@ -5,6 +5,8 @@
 #include "../inter/Prog.hpp"
 #include "../inter/Seq.hpp"
 #include "../inter/Expr.hpp"
+#include "../inter/Stmt.hpp"
+#include "../inter/Set.hpp"
 #include "../symbols/Env.hpp"
 
 class Parser

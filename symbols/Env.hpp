@@ -15,14 +15,14 @@ public:
 		table.insert(std::pair<Token, Id>(w, *i));
 	}
 
-	Id get(Token w)
+	Id* get(Token w)
 	{
-		Id found;
+		Id *found;
 
 		std::map<Token, Id>::iterator itr;
 		for(itr = table.begin(); itr != table.end(); ++itr)
 		{
-			found = itr->second; // get Id
+			found = &(itr->second); // get Id
 			break;
 		}
 		return found;

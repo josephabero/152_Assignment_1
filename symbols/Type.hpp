@@ -10,7 +10,7 @@ public:
     Type(std::string s, std::string tag, int w) : type(s, tag), width(w)
     {}
 
-    Type Int()
+    static Type Int()
     {
         Type comp;
         comp.value = "int";
@@ -18,7 +18,7 @@ public:
         return comp;
     };
 
-    Type Float()
+    static Type Float()
     {
         Type comp;
         comp.value = "float";
@@ -26,7 +26,7 @@ public:
         return comp;
     };
 
-    Type Bool()
+    static Type Bool()
     {
         Type comp;
         comp.value = "bool";
@@ -34,7 +34,7 @@ public:
         return comp;
     };
 
-    Type Null()
+    static Type Null()
     {
     	Type comp;
     	comp.value = "";
@@ -42,7 +42,7 @@ public:
     	return comp;
     };
 
-    bool numeric(Type p)
+    static bool numeric(Type p)
     {
     	return (p == Type::Int() || p == Type::Float());
     };
