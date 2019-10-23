@@ -22,8 +22,11 @@ public:
 		std::map<Token, Id>::iterator itr;
 		for(itr = table.begin(); itr != table.end(); ++itr)
 		{
-			found = &(itr->second); // get Id
-			break;
+			if((itr->second).op.value == w.value)
+			{
+				found = &(itr->second); // get Id
+				break;
+			}
 		}
 		return found;
 	}

@@ -4,6 +4,7 @@
 #include "Id.hpp"
 #include "Expr.hpp"
 #include "../symbols/Type.hpp"
+#include <assert.h>
 using namespace std;
 
 class Set : public Stmt
@@ -11,12 +12,9 @@ class Set : public Stmt
 public:
 	Set(Id i, Expr x): id(i), expr(x)
 	{
-		if(check(id.type, expr.type) == Type::Null()) cout << "Set: Type Error" << endl;
-		else
-		{
-			children.push_back(&id);
-			children.push_back(&expr);
-		}
+		assert(!(check(id.type, expr.type) == Type::Null()));
+		children.push_back(&id);
+		children.push_back(&expr);
 	}
 
 	std::string getNodeStr() { return "ASSIGN"; };

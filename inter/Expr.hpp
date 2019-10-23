@@ -12,7 +12,7 @@ public:
 	Expr(Token token, Type type) : op(token), type(type)
 	{}
 
-	std::string getNodeStr() { return "Token " +  op.tokenTag; };
+	std::string getNodeStr() { return "Token " +  op.value; };
 
 	Token op;
 	Type type;
