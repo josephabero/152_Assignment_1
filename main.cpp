@@ -17,7 +17,7 @@ int main ()
 
     lexer.input = 
         // TEST INPUT 0
-        "{ int b;\n int dd;\n b = dd;}";
+        // "{ int b;\n int dd;\n b = dd;}";
     	// TEST INPUT 1
     	// "{ \
      //        int b; b = 1; \
@@ -72,6 +72,11 @@ int main ()
   //   	// -I- Finish printing if EOF token is found
   //   	if(token_peek[i].tokenTag == "EOF") break; 
   //   }
+
+    // ASSN INPUT
+    "{ int r; int dd; int a; int d; \
+    r = a; dd = d; \
+    while( dd <= r ) dd = 2*dd; }";
 
     Parser parser(lexer);
     Prog *tree = parser.program();

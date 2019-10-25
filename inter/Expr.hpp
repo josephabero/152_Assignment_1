@@ -2,6 +2,7 @@
 
 #include "../symbols/Type.hpp"
 #include "../lexer/token.hpp"
+#include "Node.hpp"
 
 class Expr : public Node
 {

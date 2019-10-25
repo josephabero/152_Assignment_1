@@ -17,6 +17,7 @@ void Parser::match(string t)
 {
     // if(look.tokenTag == t)  move();
     // else                    error("Syntax error");
+    cout << "match: " << look.tokenTag << " == " << t << endl;
     assert(look.tokenTag == t);     
     move(); 
 }
@@ -124,6 +125,22 @@ Stmt* Parser::stmt()
     {
         return block();
     }
+
+    else if(look.tokenTag == "WHILE")
+    {
+        While *whilenode = new While();
+        //savedStmt = Stmt.Enclosing
+        //Stmt.Enclosing = whilenode
+        match("WHILE");
+        match("(");
+        expr = allexpr();
+        match(")");
+        s1 = stmt();
+        whilenode->init(*expr, *s1);
+        //Stmt.Enclosing = savedStmt;
+        return whilenode;
+    }
+
     else
     {
         cout << "stmt: assign()" << endl;
@@ -198,7 +215,7 @@ Expr* Parser::rel()
     {
         Token token = look;
         move();
-        // expr = Rel(token, expr, expr());
+        expr = new Rel(token, *expr, *expression());
     }
     return expr;
 }

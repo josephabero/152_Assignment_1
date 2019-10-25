@@ -13,6 +13,10 @@ public:
 	Set(Id i, Expr x): id(i), expr(x)
 	{
 		assert(!(check(id.type, expr.type) == Type::Null()));
+
+		cout << "push_back from Set" << endl;
+		cout << "Set1: " << id.op.value << endl;
+		cout << "Set2: " << expr.op.value << endl;
 		children.push_back(&id);
 		children.push_back(&expr);
 	}

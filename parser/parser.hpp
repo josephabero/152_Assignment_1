@@ -2,11 +2,13 @@
 
 #include "../lexer/lexer.hpp"
 #include "../lexer/token.hpp"
-#include "../inter/Prog.hpp"
-#include "../inter/Seq.hpp"
 #include "../inter/Expr.hpp"
+#include "../inter/Prog.hpp"
+#include "../inter/Rel.hpp"
+#include "../inter/Seq.hpp"
 #include "../inter/Stmt.hpp"
 #include "../inter/Set.hpp"
+#include "../inter/While.hpp"
 #include "../symbols/Env.hpp"
 
 class Parser
