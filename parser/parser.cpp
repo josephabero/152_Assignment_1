@@ -4,8 +4,9 @@ using namespace std;
 
 void Parser::move()
 { 
+    cout << "Move From: " << look.value;
     look = lexer.getNextToken(); 
-    cout << "Move: " << look.value << " " << look.tokenTag << endl;
+    cout << " To: " << look.value << endl;
 }
 
 void Parser::error(string errorMessage)
@@ -136,7 +137,8 @@ Stmt* Parser::stmt()
         expr = allexpr();
         match(")");
         s1 = stmt();
-        whilenode->init(*expr, *s1);
+        cout << "WHILE s1: " << s1->getNodeStr() << endl;
+        whilenode->init(expr, s1);
         //Stmt.Enclosing = savedStmt;
         return whilenode;
     }
@@ -161,6 +163,7 @@ Stmt* Parser::assign()
     move();
     stmt = new Set(*(id), *(allexpr()));
     match(";");
+    cout << "return assign(): " << stmt->getNodeStr() << endl;
     return stmt;
 }
 
@@ -174,6 +177,7 @@ Expr* Parser::allexpr()
         move();
         // expr = OR(token, expr, andexpr())
     }
+    cout << "return allexpr(): " << expr->op.tokenTag << endl;
     return expr;
 }
 
@@ -187,6 +191,7 @@ Expr* Parser::andexpr()
         move();
         // expr = AND(token, expr, equality());
     }
+    cout << "return andexpr(): " << expr->op.tokenTag << endl;
     return expr;
 }
 
@@ -200,6 +205,7 @@ Expr* Parser::equality()
         move();
         // expr = Rel(token, expr, rel());
     }
+    cout << "return equality: " << expr->op.tokenTag << endl;
     return expr;
 }
 
@@ -214,9 +220,11 @@ Expr* Parser::rel()
         look.tokenTag == ">")
     {
         Token token = look;
+        cout << "move in rel()" << endl;
         move();
         expr = new Rel(token, *expr, *expression());
     }
+    cout << "return rel(): " << expr->op.tokenTag << endl;
     return expr;
 }
 
@@ -226,10 +234,12 @@ Expr* Parser::expression()
     Expr *expr = term();
     while(look.tokenTag == "+" || look.tokenTag == "-")
     {
+        cout << "move in expression()" << endl;
         Token token = look;
         move();
         // expr = Arith(token, expr, term());
     }
+    cout << "return expression(): " << expr->op.tokenTag << endl;
     return expr;
 }
 
@@ -239,10 +249,13 @@ Expr* Parser::term()
     Expr *expr = factor();
     while(look.tokenTag == "*" || look.tokenTag == "/")
     {
+        cout << "move in term()" << endl;
         Token token = look;
         move();
-        // expr = Arith(token, expr, factor());
+        expr = new Arith(token, *expr, *factor());
+        cout << "term() * or /: " << expr->op.tokenTag << endl;
     }
+    cout << "return term(): " << expr->op.tokenTag << endl;
     return expr;
 }
 
@@ -286,8 +299,11 @@ Expr* Parser::factor()
         cout << "ID" << endl;
         string s = look.tokenTag;
         Id *id = top.get(look);
+        cout << "move in factor(): ID" << endl;
         move();
+        cout << "return factor(): " << id->op.tokenTag << endl;
         return id;
     }
+    cout << "return factor(): " << expr->op.tokenTag << endl;
     return expr;
 }

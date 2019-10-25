@@ -2,6 +2,7 @@
 
 #include "../lexer/lexer.hpp"
 #include "../lexer/token.hpp"
+#include "../inter/Arith.hpp"
 #include "../inter/Expr.hpp"
 #include "../inter/Prog.hpp"
 #include "../inter/Rel.hpp"

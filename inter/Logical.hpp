@@ -16,6 +16,8 @@ public:
 		// Type Error
 		assert(type == Type::Null());
 		std::cout << "push_back from Logical" << std::endl;
+		std::cout << "E1: " << expr1.op.value << std::endl;
+		std::cout << "E2: " << expr2.op.value << std::endl;
 		children.push_back(&expr1);
 		children.push_back(&expr2);
 	}

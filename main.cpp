@@ -76,7 +76,7 @@ int main ()
     // ASSN INPUT
     "{ int r; int dd; int a; int d; \
     r = a; dd = d; \
-    while( dd <= r ) dd = 2*dd; }";
+    while( dd <= r ) dd = d; }";
 
     Parser parser(lexer);
     Prog *tree = parser.program();
@@ -104,12 +104,12 @@ string printTree(Node *root)
 
 void printTree(Node *root, int indent, string *sb)
 {
-    // cout << "printTree: " << indent << endl;
+    cout << "printTree: " << indent << endl;
     *sb += getIndentString(indent);
     *sb += "+--";
     *sb += root->getNodeStr();
     *sb += "\n";
-    // cout << *sb << endl;
+    cout << *sb << endl;
 
     for(int i = 0; i < root->children.size(); i++)
     {

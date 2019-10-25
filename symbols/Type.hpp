@@ -47,7 +47,7 @@ public:
     	return (p == Type::Int() || p == Type::Float());
     };
 
-    Type max(Type p1, Type p2)
+    static Type max(Type p1, Type p2)
     {
     	if( ! numeric(p1) || ! numeric(p2) ) 					return Null();
     	else if ( p1 == Type::Float() || p2 == Type::Float()) 	return Float();

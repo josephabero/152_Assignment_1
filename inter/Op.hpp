@@ -7,4 +7,4 @@ class Op : public Expr
 {
 public:
 	Op(Token token, Type p) : Expr(token, p) {}
-}
+};
