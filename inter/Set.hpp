@@ -10,15 +10,15 @@ using namespace std;
 class Set : public Stmt
 {
 public:
-	Set(Id i, Expr x): id(i), expr(x)
+	Set(Id *i, Expr *x): id(i), expr(x)
 	{
-		assert(!(check(id.type, expr.type) == Type::Null()));
+		assert(!(check(id->type, expr->type) == Type::Null()));
 
 		cout << "push_back from Set" << endl;
-		cout << "Set1: " << id.op.value << endl;
-		cout << "Set2: " << expr.op.value << endl;
-		children.push_back(&id);
-		children.push_back(&expr);
+		cout << "Set1: " << id->op.value << endl;
+		cout << "Set2: " << expr->op.value << endl;
+		children.push_back(id);
+		children.push_back(expr);
 	}
 
 	std::string getNodeStr() { return "ASSIGN"; };
@@ -30,6 +30,6 @@ public:
 		else												return Type::Null();
 	}
 
-	Id id;
-	Expr expr;
+	Id *id;
+	Expr *expr;
 };

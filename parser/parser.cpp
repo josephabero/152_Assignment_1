@@ -194,7 +194,7 @@ Stmt* Parser::assign()
     Id *id = top->get(token);
 
     move();
-    stmt = new Set(*(id), *(allexpr()));
+    stmt = new Set(id, allexpr());
     match(";");
     cout << "return assign(): " << stmt->getNodeStr() << endl;
     return stmt;
@@ -208,7 +208,7 @@ Expr* Parser::allexpr()
     {
         Token token = look;
         move();
-        // expr = OR(token, expr, andexpr())
+        expr = new Or(token, expr, andexpr());
     }
     cout << "return allexpr(): " << expr->op.tokenTag << endl;
     return expr;
@@ -255,7 +255,8 @@ Expr* Parser::rel()
         Token token = look;
         cout << "move in rel()" << endl;
         move();
-        expr = new Rel(token, *expr, *expression());
+        expr = new Rel(token, expr, expression());
+        cout << "LE Rel: " << expr->op.tokenTag << endl;
     }
     cout << "return rel(): " << expr->op.tokenTag << endl;
     return expr;
@@ -285,7 +286,7 @@ Expr* Parser::term()
         cout << "move in term()" << endl;
         Token token = look;
         move();
-        expr = new Arith(token, *expr, *factor());
+        expr = new Arith(token, expr, factor());
         cout << "term() * or /: " << expr->op.tokenTag << endl;
     }
     cout << "return term(): " << expr->op.tokenTag << endl;
@@ -295,7 +296,7 @@ Expr* Parser::term()
 Expr* Parser::factor()
 {
     cout << "factor" << endl;
-    Expr *expr = new Expr(); // Expr initialized as null
+    Expr *expr; // Expr initialized as null
     if(look.tokenTag == "(")
     {
         move();
@@ -336,6 +337,10 @@ Expr* Parser::factor()
         move();
         cout << "return factor(): " << id->op.tokenTag << endl;
         return id;
+    }
+    else
+    {
+        expr = new Expr();
     }
     cout << "return factor(): " << expr->op.tokenTag << endl;
     return expr;

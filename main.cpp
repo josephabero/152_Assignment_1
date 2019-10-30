@@ -74,12 +74,12 @@ int main ()
   //   }
 
     // ASSN INPUT
-    // "{ int r; int dd; int a; int d; \
-    // r = a; dd = d;  \
-    // if( dd <= r ) {a = d;} }";
     "{ int r; int dd; int a; int d; \
     r = a; dd = d;  \
-    break; }";
+    if( dd <= r ) {a = d;} }";
+    // "{ int r; int dd; int a; int d; \
+    // r = a; dd = d;  \
+    // r || a; }";
 
     Parser parser(lexer);
     Prog *tree = parser.program();
@@ -111,16 +111,22 @@ string printTree(Node *root)
 
 void printTree(Node *root, int indent, string *sb)
 {
-   //  cout << "printTree: " << indent << endl;
+    //  cout << "printTree: " << indent << endl;
     *sb += getIndentString(indent);
     *sb += "+--";
     *sb += root->getNodeStr();
     *sb += "\n";
     cout << *sb << endl;
 
-    for(int i = 0; i < root->children.size(); i++)
+    cout << "root: " << root->getNodeStr() << endl;
+    cout << "size: " << root->children.size() << endl;
+    // for(int i = 0; i < root->children.size(); i++)
+    // {
+    //     printTree(root->children[i], indent + 1, sb);
+    // }
+    for( auto i : root->children )
     {
-        printTree(root->children[i], indent + 1, sb);
+      printTree(i, indent + 1, sb);
     }
 }
 

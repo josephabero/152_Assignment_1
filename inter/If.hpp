@@ -16,6 +16,11 @@ public:
         std::cout << "I2: " << stmt->getNodeStr() << std::endl;
         children.push_back(expr);
         children.push_back(stmt);
+
+        for(int i = 0; i < children.size(); i++)
+        {
+        	std::cout << "HI: " << children[i]->getNodeStr() << std::endl;
+        }
 	}
 
 	std::string getNodeStr() { return "IF"; }
