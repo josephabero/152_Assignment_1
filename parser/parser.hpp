@@ -2,8 +2,10 @@
 
 #include "../lexer/lexer.hpp"
 #include "../lexer/token.hpp"
+#include "../inter/And.hpp"
 #include "../inter/Arith.hpp"
 #include "../inter/Break.hpp"
+#include "../inter/Constant.hpp"
 #include "../inter/Do.hpp"
 #include "../inter/Else.hpp"
 #include "../inter/Expr.hpp"

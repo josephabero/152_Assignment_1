@@ -74,12 +74,12 @@ int main ()
   //   }
 
     // ASSN INPUT
-    "{ int r; int dd; int a; int d; \
-    r = a; dd = d;  \
-    if( dd <= r ) {a = d;} }";
     // "{ int r; int dd; int a; int d; \
     // r = a; dd = d;  \
-    // r || a; }";
+    // if( dd <= r ) {a = d;} }";
+    "{ int r; int dd; int a; int d; \
+    r = a; dd = d;  \
+    while( dd <= r ) {a = d;} }";
 
     Parser parser(lexer);
     Prog *tree = parser.program();

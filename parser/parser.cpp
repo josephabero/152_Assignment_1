@@ -222,7 +222,7 @@ Expr* Parser::andexpr()
     {
         Token token = look;
         move();
-        // expr = AND(token, expr, equality());
+        expr = new And(token, expr, equality());
     }
     cout << "return andexpr(): " << expr->op.tokenTag << endl;
     return expr;
@@ -236,7 +236,7 @@ Expr* Parser::equality()
     {
         Token token = look;
         move();
-        // expr = Rel(token, expr, rel());
+        expr = new Rel(token, expr, rel());
     }
     cout << "return equality: " << expr->op.tokenTag << endl;
     return expr;
@@ -271,7 +271,7 @@ Expr* Parser::expression()
         cout << "move in expression()" << endl;
         Token token = look;
         move();
-        // expr = Arith(token, expr, term());
+        expr = new Arith(token, expr, term());
     }
     cout << "return expression(): " << expr->op.tokenTag << endl;
     return expr;
@@ -306,25 +306,25 @@ Expr* Parser::factor()
     }
     else if(look.tokenTag == "NUM")
     {
-        //expr = Constant(look, Type::Int());
+        expr = new Constant(look, Type::Int());
         move();
         return expr;
     }
     else if(look.tokenTag == "REAL")
     {
-        //expr = Constant(look, Type::Float());
+        expr = new Constant(look, Type::Float());
         move();
         return expr;
     }
     else if(look.tokenTag == "true")
     {
-        //expr = Constant::True();
+        expr = Constant::True();
         move();
         return expr;
     }
     else if(look.tokenTag == "false")
     {
-        //expr = Constant::False();
+        expr = Constant::False();
         move();
         return expr;
     }
