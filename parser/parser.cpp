@@ -37,7 +37,7 @@ Block* Parser::block()
 {
     cout << "Block" << endl;
     match("{");
-    Env savedEnv = top;
+    Env* savedEnv = top;
     decls();
     Stmt *s = stmts();
     match("}");
@@ -58,7 +58,7 @@ void Parser::decls()
         match("ID");
         match(";");
         Id *id = new Id(tok, *t, used);
-        top.put(tok, id);
+        top->put(tok, id);
         used = used + t->width;
     }
     cout << "End decls" << endl;
@@ -102,29 +102,30 @@ Stmt* Parser::stmt()
     cout << "stmt: " << look.tokenTag << endl;
     if(look.tokenTag == ";")
     {
-        cout << "if worked: " << look.tokenTag << endl;
+        // cout << "if worked: " << look.tokenTag << endl;
         move();
 
         Stmt *nullStmt = new Stmt();
         return nullStmt;
     }
-    else if(look.tokenTag == "if")
+    else if(look.tokenTag == "IF")
     {
-        match("if");
+        match("IF");
         match("(");
         expr = allexpr();
         match(")");
 
         s1 = stmt();
-        if(look.tokenTag != "else") //return If(expr, s1);
-        match("else");
+        if(look.tokenTag != "ELSE")
+        {
+            If *tempIf = new If(expr, s1);
+            return tempIf;
+        }
+        match("ELSE");
         s2 = stmt();
-        // return Else(expr, s1, s2);
-    }
 
-    else if(look.tokenTag == "{")
-    {
-        return block();
+        Else *tempElse = new Else(expr, s1, s2);
+        return tempElse;
     }
 
     else if(look.tokenTag == "WHILE")
@@ -140,15 +141,47 @@ Stmt* Parser::stmt()
         cout << "WHILE s1: " << s1->getNodeStr() << endl;
         whilenode->init(expr, s1);
         //Stmt.Enclosing = savedStmt;
+        cout << "WHILE init: " << whilenode->expr->getNodeStr() << " " << whilenode->stmt->getNodeStr() << endl;
+        cout << "return from stmt: WHILE" << endl;
         return whilenode;
+    }
+
+    else if(look.tokenTag == "DO")
+    {
+        Do *donode = new Do();
+        // savedStmt = Stmt.Enclosing
+        // Stmt.Enclosing = donode;
+        match("DO");
+        s1 = stmt();
+        match("WHILE");
+        match("(");
+        expr = allexpr();
+        match(")");
+        donode->init(s1, expr);
+        // Stmt.Enclosing = savedStmt;
+        return donode;
+    }
+
+    else if(look.tokenTag == "BREAK")
+    {
+        match("BREAK");
+        match(";");
+        Break *tempBreak = new Break();
+        return tempBreak;
+    }
+
+    else if(look.tokenTag == "{")
+    {
+        return block();
     }
 
     else
     {
-        cout << "stmt: assign()" << endl;
+        cout << "return from stmt: assign()" << endl;
         return assign();
     }
 
+    cout << "return from stmt()" << endl;
     return s;
 }
 
@@ -158,7 +191,7 @@ Stmt* Parser::assign()
     Stmt *stmt;
     Token token = look;
     match("ID");
-    Id *id = top.get(token);
+    Id *id = top->get(token);
 
     move();
     stmt = new Set(*(id), *(allexpr()));
@@ -298,7 +331,7 @@ Expr* Parser::factor()
     {
         cout << "ID" << endl;
         string s = look.tokenTag;
-        Id *id = top.get(look);
+        Id *id = top->get(look);
         cout << "move in factor(): ID" << endl;
         move();
         cout << "return factor(): " << id->op.tokenTag << endl;

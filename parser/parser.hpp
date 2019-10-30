@@ -3,7 +3,11 @@
 #include "../lexer/lexer.hpp"
 #include "../lexer/token.hpp"
 #include "../inter/Arith.hpp"
+#include "../inter/Break.hpp"
+#include "../inter/Do.hpp"
+#include "../inter/Else.hpp"
 #include "../inter/Expr.hpp"
+#include "../inter/If.hpp"
 #include "../inter/Prog.hpp"
 #include "../inter/Rel.hpp"
 #include "../inter/Seq.hpp"
@@ -19,6 +23,7 @@ public:
 	{
 		used = 0;
 		move();
+		top = new Env();
 	}
 
 	void error(std::string errorMessage);
@@ -45,6 +50,6 @@ public:
 private:
 	Lexer lexer;
 	Token look;
-	Env top;
+	Env *top;
 	int used;
 };

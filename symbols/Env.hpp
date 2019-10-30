@@ -33,5 +33,5 @@ public:
 private:
 	std::map<Token, Id> table;
 protected:
-	static Env prev;
+	static Env *prev;
 };

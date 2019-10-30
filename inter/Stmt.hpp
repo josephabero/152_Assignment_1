@@ -5,7 +5,7 @@
 class Stmt : public Node
 {
 public:
-	Stmt()	{}
+	Stmt() { Node(); }
 
 	int after = 0;
 

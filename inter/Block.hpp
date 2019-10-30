@@ -9,7 +9,7 @@ public:
 
 	Block(Stmt *stmt) : stmt(stmt)
 	{
-		std::cout << "push_back from Block\n";
+		std::cout << "push_back from Block: " << stmt->getNodeStr() << std::endl;
 		children.push_back(stmt);
 	}
 
