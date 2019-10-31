@@ -36,6 +36,12 @@ All grammar handled by the sample code (project-2-parser-sample) is implemented 
 	- If Statements 		(if(a < b))
 	- While Statements 		(while(a < b) { a = b; } )
 	- Do While Statements	(do { a = b; } while(a < b);)
+	- Type Checking         (Explained in more detail in ERROR HANDLING)
+	- Custom Assert Messages
+	- Symbol Table			(Implemented as a Vector of Node pointers)
+	- Virtual function implementation to create Parse Tree
+	- Parse Tree
+	- Printing Parse Tree
 
 
 TO ADJUST INPUT
@@ -69,3 +75,17 @@ If an error is reached, the code will stop and the last line will print an error
 EXAMPLE)
 	
 	assert: "SYNTAX ERROR" (LINE: 22) in file parser/parser.cpp
+
+
+
+
+
+WARNING
+------------
+
+* Did not have time to comment out/erase print statements *
+* Print statements were used for debugging purposes *
+* Tree is printed multiple times *
+
+* LAST TREE PRINTED IS FINAL PARSE TREE *
+
