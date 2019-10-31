@@ -1,6 +1,11 @@
-152 Assignment 1: Lexical Analyzer
+152 Assignment
 
 By: Joseph Abero, Jon Andrew Hernandez, Gong Huang, and Colin Shardt
+
+The team is developing a compiler, so far what has been developed:
+
+- Lexer
+- Parser
 
 Code is written in C++ and project can be built and run in the IDE of your choice. 
 These are steps to run in command line.
@@ -37,3 +42,6 @@ EXAMPLE)
                 do a = a+1; while(a < 100); \
             } \
         }";
+
+
+Various examples are commented out in main.cpp.
