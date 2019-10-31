@@ -10,6 +10,7 @@
 #include "../inter/Else.hpp"
 #include "../inter/Expr.hpp"
 #include "../inter/If.hpp"
+#include "../inter/IncDec.hpp"
 #include "../inter/Or.hpp"
 #include "../inter/Prog.hpp"
 #include "../inter/Rel.hpp"
@@ -47,6 +48,7 @@ public:
 	Expr* equality();
 	Expr* rel();
 	Expr* expression();
+	//Expr* IncrementDecrement();
 	Expr* term();
 	Expr* factor();
 
