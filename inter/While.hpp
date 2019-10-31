@@ -14,7 +14,8 @@ public:
         stmt = s;
 
         // Boolean required in While
-        assert(!(expr->type == Type::Bool()));
+        // assert(!(expr->type == Type::Bool()));
+        ASSERT(!(expr->type == Type::Bool()), "TYPE ERROR");
 
         std::cout << "push_back from While" << std::endl;
         std::cout << "W1: " << expr->getNodeStr() << std::endl;

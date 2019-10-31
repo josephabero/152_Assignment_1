@@ -19,7 +19,8 @@ void Parser::match(string t)
     // if(look.tokenTag == t)  move();
     // else                    error("Syntax error");
     cout << "match: " << look.tokenTag << " == " << t << endl;
-    assert(look.tokenTag == t);     
+    ASSERT(look.tokenTag == t, "SYNTAX ERROR");   
+    // assert(look.tokenTag == t);  
     move(); 
 }
 

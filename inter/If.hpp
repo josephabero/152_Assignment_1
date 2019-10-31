@@ -9,7 +9,8 @@ public:
 	If(Expr *x, Stmt *s) : stmt(s), expr(x)
 	{
 		// Type Error: Boolean is Required in IF
-		assert(!(expr->type == Type::Bool()));
+		// assert(!(expr->type == Type::Bool()));
+		ASSERT(!(expr->type == Type::Bool()), "TYPE ERROR");
 
 		std::cout << "push_back in If" << std::endl;
 		std::cout << "I1: " << expr->getNodeStr() << std::endl;

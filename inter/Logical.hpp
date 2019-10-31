@@ -14,7 +14,9 @@ public:
 		// if(type == Type::Null()) error("Type Error");
 
 		// Type Error
-		assert(type == Type::Null());
+		// assert(type == Type::Null());
+		ASSERT(type == Type::Null(), "TYPE ERROR");
+		
 		std::cout << "push_back from Logical" << std::endl;
 		std::cout << "E1: " << expr1->op.value << std::endl;
 		std::cout << "E2: " << expr2->op.value << std::endl;

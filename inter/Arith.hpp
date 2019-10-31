@@ -13,7 +13,8 @@ public:
 		// if(type == Type::Null()) error("Type Error");
 
 		// Type Error
-		assert(type == Type::Null());
+		// assert(type == Type::Null() && ("TYPE ERROR: Line " + lexline));
+		ASSERT(type == Type::Null(), "TYPE ERROR");
 
 		std::cout << "push_back from Arith" << std::endl;
 		children.push_back(expr1);

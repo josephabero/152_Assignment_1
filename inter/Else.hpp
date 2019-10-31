@@ -9,7 +9,8 @@ public:
 	Else(Expr *x, Stmt *s1, Stmt *s2) : stmt2(s2), stmt1(s1), expr(x)
 	{
 		// Type Error: Boolean is Required in Else
-		assert(!(expr->type == Type::Bool()));
+		// assert(!(expr->type == Type::Bool()));
+		ASSERT(!(expr->type == Type::Bool()), "TYPE ERROR");
 
 		std::cout << "push_back in Else" << std::endl;
 		std::cout << "E1: " << expr->getNodeStr() << std::endl;

@@ -12,7 +12,9 @@ class Set : public Stmt
 public:
 	Set(Id *i, Expr *x): id(i), expr(x)
 	{
-		assert(!(check(id->type, expr->type) == Type::Null()));
+		// assert(!(check(id->type, expr->type) == Type::Null()));
+		// Type of id and expr should be numeric or boolean
+		ASSERT(!(check(id->type, expr->type) == Type::Null()), "TYPE ERROR");
 
 		cout << "push_back from Set" << endl;
 		cout << "Set1: " << id->op.value << endl;
@@ -27,6 +29,8 @@ public:
 	{
 		if(Type::numeric(p1) && Type::numeric(p2)) 			return p2;
 		else if(p1 == Type::Bool() && p2 == Type::Bool())	return p2;
+		else if(Type::numeric(p1) || p1 == Type::Bool()) return p1;
+		else if(Type::numeric(p2) || p2 == Type::Bool()) return p2;
 		else												return Type::Null();
 	}
 

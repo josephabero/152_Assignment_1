@@ -14,7 +14,8 @@ public:
         stmt = s;
 
         // Boolean required in Do
-        assert(!(expr->type == Type::Bool()));
+        // assert(!(expr->type == Type::Bool()));
+        ASSERT(!(expr->type == Type::Bool()), "TYPE ERROR");
 
         std::cout << "push_back from Do" << std::endl;
         std::cout << "D1: " << expr->getNodeStr() << std::endl;
