@@ -119,6 +119,34 @@ Token Lexer::getNextToken()
                 temp_token.tokenTag = ">";
             }
             break;
+        case '+':
+            if( input[current_lexer_index + 1] == '+' )
+            {
+                current_lexer_index += 2;
+                temp_token.value = "++";
+                temp_token.tokenTag = "++";
+            }
+            else
+            {
+                current_lexer_index++;
+                temp_token.value = '+';
+                temp_token.tokenTag = '+';
+            }
+            break;
+        case '-':
+            if( input[current_lexer_index + 1] == '-' )
+            {
+                current_lexer_index += 2;
+                temp_token.value = "--";
+                temp_token.tokenTag = "--";
+            }
+            else
+            {
+                current_lexer_index++;
+                temp_token.value = '-';
+                temp_token.tokenTag = '-';
+            }
+            break;
         default:
             // 3. Check for digits
             if(isdigit(peek))

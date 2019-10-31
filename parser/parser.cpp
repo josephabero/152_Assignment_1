@@ -256,17 +256,39 @@ Expr* Parser::rel()
         Token token = look;
         cout << "move in rel()" << endl;
         move();
-        expr = new Rel(token, expr, expression());
+        expr = new Rel(token, expr, term());
         cout << "LE Rel: " << expr->op.tokenTag << endl;
     }
     cout << "return rel(): " << expr->op.tokenTag << endl;
     return expr;
 }
 
+/*Expr* Parser::IncrementDecrement()
+{
+    cout << "IncrementDecrement" << endl;
+    Expr *expr = term();
+    while(look.tokenTag == "++" || look.tokenTag == "--")
+    {
+        cout << "move in IncrementDecrement()" << endl;
+        Token token = look;
+        move();
+        expr = new IncDec(token, expr/*, expression()*//*);
+    }
+    cout << "return IncrementDecrement(): " << expr->op.tokenTag << endl;
+    return expr;
+}*/
+
 Expr* Parser::expression()
 {
     cout << "expression" << endl;
     Expr *expr = term();
+    while(look.tokenTag == "++" || look.tokenTag == "--")
+    {
+        cout << "move in IncrementDecrement()" << endl;
+        Token token = look;
+        move();
+        expr = new IncDec(token, expr);
+    }
     while(look.tokenTag == "+" || look.tokenTag == "-")
     {
         cout << "move in expression()" << endl;
