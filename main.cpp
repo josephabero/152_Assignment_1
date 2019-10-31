@@ -61,8 +61,13 @@ int main ()
     // DO WHILE Test
     "{ int r; int dd; int a; int d; \
     r = a; dd = d; r = 0; \
-    do { a = d; d = a; } while( dd <= r ); \
-    r++; dd--; a = r + d; }";
+    do { a = d; d = a; } while( dd <= r ); }";
+
+    // INC/DEC Test
+    // "{ int r; int dd; int a; int d; \
+    // r = a; dd = d; r = 0; \
+    // do { a = d; d = a; } while( dd <= r ); \
+    // r++; dd--; a = r + d; }";
 
     Parser parser(lexer);
     Prog *tree = parser.program();
