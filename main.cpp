@@ -58,30 +58,22 @@ int main ()
     // r = a; dd = d;  \
     // while( dd <= r ) {a = d; d = a; } }";
 
-    // WHILE Test
+    // DO WHILE Test
     "{ int r; int dd; int a; int d; \
-    r = a; dd = d; r = false; \
+    r = a; dd = d; r = 0; \
     do { a = d; d = a; } while( dd <= r ); }";
 
     Parser parser(lexer);
     Prog *tree = parser.program();
-    // cout << tree->getNodeStr() << endl;
-    // cout << "statement test" << endl;
-    // Stmt *null = new Stmt();
-    // cout << "st: " << null->getNodeStr() << endl;
     cout << "Syntax tree:" << endl;
     string treeStr = printTree(tree);
+
 
     // Final Tree Printed
     cout << endl << "--------------------" << endl
         << "FINAL TREE: " 
         << endl << "--------------------" << endl;
     cout << treeStr << endl;
-
-    // for(int i = 0; i < tree->children.size(); i++)
-    // {
-    //   cout << tree->children[i]->getNodeStr() << endl;
-    // }
 }
 
 string printTree(Node *root)
