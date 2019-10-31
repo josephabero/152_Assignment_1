@@ -25,6 +25,19 @@ make clean: 	removes main.exe, must run make again to run project
 -I- If changes are made to class files (lexer.cpp, token.cpp, etc), 'make clean', then 'make'
 
 
+PARSER FEATURES IMPLEMENTED
+--------------------
+All grammar handled by the sample code (project-2-parser-sample) is implemented in this C++ port.
+
+
+	This includes:
+	- Variable Declarations (int a; int b;)
+	- Assignments			(a = b;)
+	- If Statements 		(if(a < b))
+	- While Statements 		(while(a < b) { a = b; } )
+	- Do While Statements	(do { a = b; } while(a < b);)
+
+
 TO ADJUST INPUT
 ----------------
 Adjust string field of lexer.input found in main.cpp to desired program to test. 
@@ -45,3 +58,14 @@ EXAMPLE)
 
 
 Various examples are commented out in main.cpp.
+
+
+ERROR HANDLING
+--------------
+Certain TYPE and SYNTAX errors are handled throughout the parsing process.
+
+If an error is reached, the code will stop and the last line will print an error message.
+
+EXAMPLE)
+	
+	assert: "SYNTAX ERROR" (LINE: 22) in file parser/parser.cpp

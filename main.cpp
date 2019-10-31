@@ -60,7 +60,7 @@ int main ()
 
     // DO WHILE Test
     "{ int r; int dd; int a; int d; \
-    r = a; dd = d; r = 0; \
+    r = a; dd = d; r = false; \
     do { a = d; d = a; } while( dd <= r ); }";
 
     Parser parser(lexer);
